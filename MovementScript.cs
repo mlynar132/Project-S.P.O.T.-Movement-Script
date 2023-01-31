@@ -114,8 +114,7 @@ public class PlayerMovement : MonoBehaviour
 
         _readyToJump = true;
         _exitingSlope = false;
-        _startYScale = transform.localScale.y;//animation wil probably make this irrelevant
-        //_currentMoveSpeed = _playerLogic.MovementSpeed;
+        _startYScale = transform.localScale.y;
         _playerControls = new PlayerControls();
         _playerControls.Player.Move.Enable();
         _playerControls.Player.Move.performed += Move;
@@ -268,22 +267,17 @@ public class PlayerMovement : MonoBehaviour
         //interpolate the movement speed when the change is higer than than from walk to speed
         if (Mathf.Abs(_desiredMoveSpeed - _lastDesiredMoveSpeed) > _SprintSpeed - _WalkSpeed && _currentMoveSpeed != 0)
         {
-            // StopCoroutine(nameof(SmoothlyLerpMoveSpeed));
-            //  StartCoroutine(nameof(SmoothlyLerpMoveSpeed));
+             StopCoroutine(nameof(SmoothlyLerpMoveSpeed));
+              StartCoroutine(nameof(SmoothlyLerpMoveSpeed));
         }
         else
         {
-            //  StopCoroutine(nameof(SmoothlyLerpMoveSpeed));
-
+              StopCoroutine(nameof(SmoothlyLerpMoveSpeed));
         }
         _currentMoveSpeed = _desiredMoveSpeed;
         _lastDesiredMoveSpeed = _currentMoveSpeed;
         //AnimOFF();
     }
-    /* private void AnimationOFF(string current)
-     {
-         anim.SetBool(current, );
-     }*/
     private void AnimOFF() //make it with previous state and current one so previous is false and current is true
     {
         anim.SetBool("Ascending", false);
@@ -301,10 +295,7 @@ public class PlayerMovement : MonoBehaviour
         _moveDirection = new Vector3(_playerControls.Player.Move.ReadValue<Vector2>().x, 0, _playerControls.Player.Move.ReadValue<Vector2>().y);
         _moveDirection = _cameraRig.transform.TransformDirection(_moveDirection);
         _moveDirection.y = 0f;
-
-        /*_moveDirection = transform.TransformPoint(transform.forward * _playerControls.Player.Move.ReadValue<Vector2>().y) + transform.TransformPoint(transform.right * _playerControls.Player.Move.ReadValue<Vector2>().x);
-        Debug.Log(transform.forward * _playerControls.Player.Move.ReadValue<Vector2>().y + " "+transform.TransformPoint(transform.forward * _playerControls.Player.Move.ReadValue<Vector2>().y));*/
-
+        
         //slope
         if (OnSlope() && !_exitingSlope)
         {
@@ -390,12 +381,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void Crouch(InputAction.CallbackContext context)
     {
-        /* transform.localScale = new Vector3(transform.localScale.x, _crouchYScale, transform.localScale.z);
-         _rb.AddForce(Vector3.down * _crouchPushDownForce, ForceMode.Impulse);*/
-        /* if (context.canceled)
-         {
-             transform.localScale = new Vector3(transform.localScale.x, _startYScale, transform.localScale.z);
-         }*/
+    
     }
     private void Jump(InputAction.CallbackContext context)
     {
